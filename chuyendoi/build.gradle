@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group = 'com.example'
+version = '1.0.0'
+
+repositories { mavenCentral() }
+
+ext {
+    springVersion = '6.2.10'
+    junitVersion  = '5.10.2'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+    implementation "org.springframework:spring-webmvc:${springVersion}"
+
+    // JSTL Jakarta 3.x (bắt buộc trên Tomcat 10.1+)
+    implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0'
+    implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1'
+
+    // Servlet API do container cung cấp
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testRuntimeOnly  "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+}
+
+test { useJUnitPlatform() }
