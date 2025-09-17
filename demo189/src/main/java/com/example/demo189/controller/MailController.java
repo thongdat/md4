@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class MailController {
 
-    private Mail saved = new Mail(); // giữ cấu hình hiện tại
+    private Mail saved = new Mail();
 
     @ModelAttribute("languages")
     public Language[] languages() {

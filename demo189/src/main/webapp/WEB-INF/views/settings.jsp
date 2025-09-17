@@ -32,14 +32,14 @@
 
     <p>
         <label>Signature:</label><br>
-        <form:textarea path="signature" rows="4" cols="40"/>
+        <form:textarea path="signature"/>
     </p>
 
     <button type="submit">Update</button>
 </form:form>
 
 <c:if test="${saved}">
-    <p style="color:green;">được lưu</p>
+    <p>được lưu</p>
 </c:if>
 
 </body>
