@@ -1,20 +1,31 @@
 package com.example.demo229.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Product {
+    @Id
     private int id;
     private String name;
-    private String description;
     private int price;
-
-
-    public Product(int id, String name, String description, int price) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-    }
+    private String category;
+    private String description;
 
     public Product() {
+    }
+
+    public Product(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Product(int id, String name, int price, String category, String description) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.category = category;
+        this.description = description;
     }
 
     public int getId() {
@@ -33,19 +44,27 @@ public class Product {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public int getPrice() {
         return price;
     }
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

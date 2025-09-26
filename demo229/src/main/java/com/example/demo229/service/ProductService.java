@@ -9,17 +9,20 @@ import java.util.List;
 
 @Service
 public class ProductService implements IProductService {
-
     @Autowired
-    private IProductRepository productRepository;
-
+    private IProductRepository studentRepository ;
     @Override
     public List<Product> findAll() {
-        return productRepository.findAll();
+        return studentRepository.findAll();
     }
 
     @Override
-    public void save(Product product) {
-        productRepository.save(product);
+    public Product findById(int id) {
+        return studentRepository.findById(id);
+    }
+
+    @Override
+    public boolean add(Product product) {
+        return studentRepository.add(product);
     }
 }
