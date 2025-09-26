@@ -1,53 +1,43 @@
 package com.example.demo229.repository;
 
 import com.example.demo229.entity.Product;
-import com.example.demo229.utils.ConnectionUtil;
-import org.hibernate.Session; // Correct Hibernate Session import
-import org.hibernate.Transaction;
-import org.hibernate.query.Query; // For HQL/JPQL queries
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.List;;
 
 @Repository
 public class ProductRepository implements IProductRepository {
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
     @Override
     public List<Product> findAll() {
-        try (Session session = ConnectionUtil.sessionFactory.openSession()) {
-            Query<Product> query = session.createQuery("FROM Product", Product.class);
-            return query.getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
+        List<Product> productList = new ArrayList<>();
+        TypedQuery<Product> query = entityManager.createQuery("from Product", Product.class);
+        productList = query.getResultList();
+        return productList;
     }
 
     @Override
     public Product findById(int id) {
-        try (Session session = ConnectionUtil.sessionFactory.openSession()) {
-
-            return session.find(Product.class, id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        Product product = entityManager.find(Product.class, id);
+        return product;
     }
 
+    @Transactional
+    @Override
     public boolean add(Product product) {
-        Transaction transaction = null;
-        try (Session session = ConnectionUtil.sessionFactory.openSession()) {
-            transaction = session.beginTransaction();
-            session.persist(product);
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
+        try{
+            entityManager.persist(product);
+        }catch (Exception e){
             return false;
         }
+        return true;
     }
 }

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
@@ -15,39 +14,48 @@ import java.util.List;
 @Controller
 @RequestMapping("/products")
 public class ProductController {
+
     @Autowired
     private IProductService productService;
 
     @ModelAttribute("category")
     public List<String> getCategory() {
-        return Arrays.asList("Bánh mì", "Cơm", "Hải Sản", "Mì-Bún");
+        return Arrays.asList("cơm", "cá", "gà");
     }
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public ModelAndView products(Model model) {
-        ModelAndView modelAndView = new ModelAndView("/product/list");
-        modelAndView.addObject("productList", productService.findAll());
-        return modelAndView;
+    @GetMapping("")
+    public String showList(Model model) {
+        model.addAttribute("productList", productService.findAll());
+        return "products/list";
     }
 
     @GetMapping("/add")
-    public String addProduct(Model model) {
+    public String showFormAdd(Model model) {
         model.addAttribute("product", new Product());
-        return "/product/add";
+        return "products/add";
     }
 
     @PostMapping("/add")
-    public String addProduct(@ModelAttribute(name = "product") Product product,
-                             RedirectAttributes redirectAttributes) {
+    public String save(@ModelAttribute("product") Product product,
+                       RedirectAttributes redirectAttributes) {
         productService.add(product);
-        redirectAttributes.addFlashAttribute("mess", "Add product successfully");
+        redirectAttributes.addFlashAttribute("mess", "Thêm sản phẩm thành công!");
         return "redirect:/products";
     }
-
-    @GetMapping("/detail/{id}")
-    public String productDetails(@PathVariable(name = "id") int id, Model model) {
+    @GetMapping("/detail")
+    public String detail(@RequestParam(name = "id", required = false, defaultValue = "3") int id,
+                         Model model) {
         Product product = productService.findById(id);
         model.addAttribute("product", product);
-        return "/product/detail";
+        return "products/detail";
+    }
+
+    // Hiển thị chi tiết sản phẩm theo path variable
+    @GetMapping("/detail/{id}")
+    public String detail2(@PathVariable("id") int id,
+                          Model model) {
+        Product product = productService.findById(id);
+        model.addAttribute("product", product);
+        return "products/detail";
     }
 }

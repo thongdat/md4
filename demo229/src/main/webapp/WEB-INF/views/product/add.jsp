@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Add Product</title>
-    <th:block th:insert="~{layout/layout::library}"/>
+    <title>Thêm sản phẩm</title>
 </head>
 <body>
-<th:block th:insert="~{layout/layout::header}"/>
-<h1>Add Product</h1>
-<form action="/products/add" method="post" th:object="${product}">
-    Name:
-    <input type="text"> <br>
-    Description:
-    <input type="text" > <br>
-    Price:
-    <input type="number" > <br>
-    Category:
-    <input type="checkbox" th:each="cate:${category}" th:value="${cate}" th:text="${cate}"> <br>
-    Quantity:
-    <input type="number" > <br>
-    <button type="submit">ADD NEW PRODUCT</button>
-    <a href="/products">CANCEL</a>
+<h2>Thêm sản phẩm mới</h2>
+
+<form th:action="@{/products/add}" th:object="${product}" method="post">
+    <label>Tên sản phẩm:</label>
+    <input type="text" th:field="*{name}" /> <br>
+
+    <label>Mô tả:</label>
+    <input type="text" th:field="*{description}" /> <br>
+
+    <label>Giá:</label>
+    <input type="number" th:field="*{price}" /> <br>
+
+    <label>Loại:</label>
+    <select th:field="*{category}">
+        <option th:each="c : ${categories}" th:value="${c}" th:text="${c}"></option>
+    </select> <br>
+
+    <button type="submit">Thêm sản phẩm</button>
 </form>
+
+<div th:if="${mess}" style="color: green;">
+    <p th:text="${mess}"></p>
+</div>
 </body>
 </html>

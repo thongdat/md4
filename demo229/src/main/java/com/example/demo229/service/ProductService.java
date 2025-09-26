@@ -10,19 +10,19 @@ import java.util.List;
 @Service
 public class ProductService implements IProductService {
     @Autowired
-    private IProductRepository studentRepository ;
+    private IProductRepository productRepository ;
     @Override
     public List<Product> findAll() {
-        return studentRepository.findAll();
+        return productRepository.findAll();
     }
 
     @Override
     public Product findById(int id) {
-        return studentRepository.findById(id);
+        return productRepository.findById(id);
     }
 
     @Override
     public boolean add(Product product) {
-        return studentRepository.add(product);
+        return productRepository.add(product);
     }
 }
