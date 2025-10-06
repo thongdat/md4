@@ -2,10 +2,11 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Post;
 import com.example.demo.repository.IPostRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import org.springframework.data.domain.Pageable;
+
 import java.util.Optional;
 
 @Service
@@ -17,8 +18,8 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public List<Post> findAll() {
-        return postRepository.findAll();
+    public Page<Post> findAll(Pageable pageable){
+        return postRepository.findAll(pageable);
     }
 
     @Override

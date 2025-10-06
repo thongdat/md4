@@ -23,6 +23,9 @@
         </tr>
         </thead>
         <tbody>
+        <tr th:if="${posts.empty}">
+            <td colspan="5" class="text-center">Không có bài viết nào để hiển thị.</td>
+        </tr>
         <tr th:each="post : ${posts}">
             <td th:text="${post.id}"></td>
             <td th:text="${post.title}"></td>
@@ -39,6 +42,23 @@
         </tr>
         </tbody>
     </table>
+
+    <nav aria-label="Page navigation" th:if="${posts.totalPages > 1}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${posts.isFirst()} ? 'disabled' : ''">
+                <a class="page-link" th:href="@{/posts(page=${posts.number - 1})}">Trang trước</a>
+            </li>
+
+            <li class="page-item" th:each="pageNumber : ${#numbers.sequence(0, posts.totalPages - 1)}"
+                th:classappend="${pageNumber == posts.number} ? 'active' : ''">
+                <a class="page-link" th:href="@{/posts(page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
+            </li>
+
+            <li class="page-item" th:classappend="${posts.isLast()} ? 'disabled' : ''">
+                <a class="page-link" th:href="@{/posts(page=${posts.number + 1})}">Trang sau</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 </body>
 </html>
