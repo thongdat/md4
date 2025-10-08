@@ -17,6 +17,7 @@
         <tr>
             <th>ID</th>
             <th>Tiêu đề</th>
+            <th>Thể loại</th>
             <th>Tóm tắt</th>
             <th>Ngày tạo</th>
             <th class="text-center">Hành động</th>
@@ -24,11 +25,12 @@
         </thead>
         <tbody>
         <tr th:if="${posts.empty}">
-            <td colspan="5" class="text-center">Không có bài viết nào để hiển thị.</td>
+            <td colspan="6" class="text-center">Không có bài viết nào để hiển thị.</td>
         </tr>
-        <tr th:each="post : ${posts}">
+        <tr th:each="post : ${posts.content}">
             <td th:text="${post.id}"></td>
             <td th:text="${post.title}"></td>
+            <td th-text="${post.category?.name}"></td>
             <td th:text="${post.summary}"></td>
             <td th:text="${#temporals.format(post.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
             <td class="text-center">
