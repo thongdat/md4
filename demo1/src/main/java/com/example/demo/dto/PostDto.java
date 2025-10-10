@@ -20,16 +20,16 @@ public class PostDto {
 
     private Integer id;
 
-    @NotBlank(message = "Tiêu đề không được để trống.")
+    @NotBlank(message = "tiêu đề không được để trông")
     private String title;
 
-    @NotBlank(message = "Nội dung không được để trống.")
+    @NotBlank(message = "nội dung không được để trống")
     private String content;
 
     private String summary;
 
     private LocalDateTime createdAt;
 
-    @NotNull(message = "Vui lòng chọn một danh mục.")
+    @NotNull(message = "chọn danh mục")
     private CategoryDto category;
 }
